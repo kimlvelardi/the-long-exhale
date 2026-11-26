@@ -2,14 +2,16 @@ const FORM_ENDPOINT = '';
 
 // Pure helpers also keep the mailto and future JSON submission consistent.
 function enquiryMessage(fields, retreat) {
-  const subject = `The Long Exhale ${retreat} - enquiry from ${fields.name}`;
+  const brand = document.body.dataset.brand || 'The Long Exhale';
+  const subject = `${brand} ${retreat} - enquiry from ${fields.name}`;
   const body = [
-    `The Long Exhale - ${retreat}`,
+    `${brand} - ${retreat}`,
     '',
     `Your name: ${fields.name}`,
     `Email: ${fields.email}`,
     `Phone: ${fields.phone || 'Not provided'}`,
-    `Which stay?: ${fields.stay}`,
+    ...(fields.stay ? [`Which stay?: ${fields.stay}`] : []),
+    ...(fields.interest ? [`I'm interested in: ${fields.interest}`] : []),
     '',
     "Anything you'd like to ask?",
     fields.message || 'No questions yet.'
